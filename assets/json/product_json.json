@@ -1,0 +1,20 @@
+{
+  "total_count" : 3,
+  "data": [
+    {
+      "name":"포도",
+      "price":3000,
+      "image_path":"https://www.100ssd.co.kr/news/photo/202208/89896_70031_1951.jpg"
+    },
+    {
+      "name":"사과",
+      "price":5000,
+      "image_path":"https://i.namu.wiki/i/QHZlaOvDdhvtLDYrA6IRvUZdddgwY9q5d0rMBywEIh7dbcNTCzTmE2CDM05JA9GRuXWqp5LsxE_T8BvGNOJhVA.webp"
+    },
+    {
+      "name":"두부",
+      "price":6000,
+      "image_path":"https://img-cf.kurly.com/shop/data/goodsview/20220314/gv30000288794_1.jpg"
+    }
+  ]
+}

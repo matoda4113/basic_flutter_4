@@ -1,4 +1,6 @@
+import 'package:basic_flutter_4/pages/MyPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../component/ProductGridViewWIdget.dart';
 import '../component/ProductListViewWidget.dart';
@@ -33,6 +35,14 @@ class _MainPageState extends State<MainPage> {
         title: Text("싱싱마을"),
         backgroundColor: Colors.green,
         centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: (){
+              Get.to(()=>MyPage());
+            },
+            child: Center(child: Text("마이페이지")),
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
