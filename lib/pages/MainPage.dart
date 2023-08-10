@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:basic_flutter_4/model/ProductModel.dart';
 import 'package:basic_flutter_4/pages/MyPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../component/ProductGridViewWIdget.dart';
@@ -15,17 +19,37 @@ class _MainPageState extends State<MainPage> {
 
 
   int mode = 0;
-  List<Product> productList = [
-    Product(name: "포도", price: 3000, imagePath: "https://www.100ssd.co.kr/news/photo/202208/89896_70031_1951.jpg"),
-    Product(name: "사과", price: 5000, imagePath: "https://i.namu.wiki/i/QHZlaOvDdhvtLDYrA6IRvUZdddgwY9q5d0rMBywEIh7dbcNTCzTmE2CDM05JA9GRuXWqp5LsxE_T8BvGNOJhVA.webp"),
-    Product(name: "두부", price: 6000, imagePath: "https://img-cf.kurly.com/shop/data/goodsview/20220314/gv30000288794_1.jpg"),
-    Product(name: "어묵", price: 7000, imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Street_eomuk.jpg/1200px-Street_eomuk.jpg"),
-    Product(name: "고무장갑", price: 8000, imagePath: "https://i.namu.wiki/i/Jy215uAViB3zyPM0uVkNkfFhP23gKnqTLtGN-F1iwWHottqISCSQrGkBJo9LIFcrMboEBDFoNNZgF6pGwX3EPA.webp"),
-    Product(name: "비닐팩", price: 9000, imagePath: "https://m.tntpack.co.kr/web/product/big/201604/887_shop1_382294.jpg"),
-    Product(name: "쌍스바", price: 500, imagePath: "https://img1.daumcdn.net/thumb/R1280x0.fpng/?fname=http://t1.daumcdn.net/brunch/service/user/4Slv/image/ebG80keywECvkxmNPYoVrbxVaAw.png"),
-    Product(name: "메두나", price: 500, imagePath: "https://www.bebeyam.com/wp-content/uploads/2020/07/binggrae-melona-8-768x1024.jpg"),
 
-  ];
+  ProductModel? productModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getProductList();
+    super.initState();
+  }
+
+  void getProductList() async {
+    String jsonString = await rootBundle.loadString('assets/json/product_json.json');
+
+    Map<String,dynamic> mapData = json.decode(jsonString);
+    ProductModel model = ProductModel.fromJson(mapData);
+    setState(() {
+      productModel = model;
+    });
+  }
+
+  // List<Product> productList = [
+  //   Product(name: "포도", price: 3000, imagePath: "https://www.100ssd.co.kr/news/photo/202208/89896_70031_1951.jpg"),
+  //   Product(name: "사과", price: 5000, imagePath: "https://i.namu.wiki/i/QHZlaOvDdhvtLDYrA6IRvUZdddgwY9q5d0rMBywEIh7dbcNTCzTmE2CDM05JA9GRuXWqp5LsxE_T8BvGNOJhVA.webp"),
+  //   Product(name: "두부", price: 6000, imagePath: "https://img-cf.kurly.com/shop/data/goodsview/20220314/gv30000288794_1.jpg"),
+  //   Product(name: "어묵", price: 7000, imagePath: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Street_eomuk.jpg/1200px-Street_eomuk.jpg"),
+  //   Product(name: "고무장갑", price: 8000, imagePath: "https://i.namu.wiki/i/Jy215uAViB3zyPM0uVkNkfFhP23gKnqTLtGN-F1iwWHottqISCSQrGkBJo9LIFcrMboEBDFoNNZgF6pGwX3EPA.webp"),
+  //   Product(name: "비닐팩", price: 9000, imagePath: "https://m.tntpack.co.kr/web/product/big/201604/887_shop1_382294.jpg"),
+  //   Product(name: "쌍스바", price: 500, imagePath: "https://img1.daumcdn.net/thumb/R1280x0.fpng/?fname=http://t1.daumcdn.net/brunch/service/user/4Slv/image/ebG80keywECvkxmNPYoVrbxVaAw.png"),
+  //   Product(name: "메두나", price: 500, imagePath: "https://www.bebeyam.com/wp-content/uploads/2020/07/binggrae-melona-8-768x1024.jpg"),
+  //
+  // ];
 
 
   @override
@@ -87,25 +111,31 @@ class _MainPageState extends State<MainPage> {
             SizedBox(
               height: 10,
             ),
+            Text("결과 : ${productModel?.totalCount}개"),
             if(mode==0)
+
             Expanded(
-                child: GridView.builder(
+                child:(productModel==null || productModel?.data ==null)
+                    ?SizedBox()
+                    :GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // 2개의 열로 구성된 그리드
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 10, // 가로 세로 비율을 1:2로 설정
                     ),
-                    itemCount: productList.length,
+                    itemCount: productModel!.data!.length,
                     itemBuilder: (context, index) {
-                      return ProductGridViewWidget(item: productList[index]);
+                      return ProductGridViewWidget(item: productModel!.data![index]);
                     })),
             if(mode==1)
               Expanded(
-                  child: ListView.builder(
+                  child:(productModel==null || productModel?.data ==null)
+                      ?SizedBox()
+                      : ListView.builder(
 
-                      itemCount: productList.length,
+                      itemCount: productModel!.data!.length,
                       itemBuilder: (context, index) {
-                        return ProductListViewWidget(item: productList[index]);
+                        return ProductListViewWidget(item: productModel!.data![index]);
                       }))
           ],
         ),
