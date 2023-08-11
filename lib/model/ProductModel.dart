@@ -1,8 +1,10 @@
 import '../vo/Product.dart';
 
+
 class ProductModel {
   int? totalCount;
   List<Product>? data;
+
 
   ProductModel({this.totalCount, this.data});
 

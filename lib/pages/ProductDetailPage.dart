@@ -15,6 +15,16 @@ class _ProductDetailPAgeState extends State<ProductDetailPage> {
 
   bool isLike = false;
 
+  late String welcomeText;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    welcomeText ="헬로우";
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +33,7 @@ class _ProductDetailPAgeState extends State<ProductDetailPage> {
       ),
       body: Column(
         children: [
+          Text(welcomeText),
           SizedBox(
             height: 30,
           ),

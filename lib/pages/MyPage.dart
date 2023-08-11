@@ -18,6 +18,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   User? myInfo;
 
+
   @override
   void initState() {
     super.initState();
