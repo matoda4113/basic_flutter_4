@@ -25,6 +25,33 @@ class _ProductDetailPAgeState extends State<ProductDetailPage> {
 
   }
 
+  Future<String> getUserName() async{
+    print('1');
+    return "김사랑";
+  }
+
+  Future<String> getUserName2() async{
+    await Future.delayed(Duration(seconds: 3), () {
+      print('2');
+    });
+    return "김수로";
+  }
+
+  Future<String> getUserName3() async{
+    await Future.delayed(Duration(seconds: 3), () {
+      print('3');
+    });
+    return "김꺽정";
+  }
+
+  void printUserName() async {
+    String ddd = await getUserName();
+    getUserName2();
+    getUserName3();
+    print(ddd);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +60,12 @@ class _ProductDetailPAgeState extends State<ProductDetailPage> {
       ),
       body: Column(
         children: [
+          GestureDetector(
+            onTap: (){
+              printUserName();
+            },
+            child: Text("유저이름 프린트"),
+          ),
           Text(welcomeText),
           SizedBox(
             height: 30,
